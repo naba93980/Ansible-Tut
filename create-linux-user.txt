@@ -1,0 +1,15 @@
+sudo adduser nabajyotimodak
+sudo passwd nabajyotimodak
+sudo usermod -aG sudo nabajyotimodak
+
+sudo mkdir /home/nabajyotimodak/.ssh
+sudo chown nabajyotimodak:nabajyotimodak /home/nabajyotimodak/.ssh
+sudo chmod 700 /home/nabajyotimodak/.ssh
+
+sudo touch /home/nabajyotimodak/.ssh/authorized_keys
+sudo chown nabajyotimodak:nabajyotimodak /home/nabajyotimodak/.ssh/authorized_keys
+sudo chmod 600 /home/nabajyotimodak/.ssh/authorized_keys
+
+echo "user-public-key" | sudo tee -a /home/nabajyotimodak/.ssh/authorized_keys
+
+ssh -i /path/to/your-key.pem nabajyotimodak@your-instance-public-dns
