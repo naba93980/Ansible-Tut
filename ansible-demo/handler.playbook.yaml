@@ -1,0 +1,30 @@
+---
+- name: Example playbook with handlers
+  hosts: all
+  become: yes
+
+  tasks:              # u can put tasks inside roles or here
+    - name: Install Apache
+      apt:
+        name: apache2
+        state: present
+      notify:
+        - Restart Apache
+
+    - name: Update Apache configuration
+      template:
+        src: /path/to/httpd.conf.j2
+        dest: /etc/apache2/apache2.conf
+      notify:
+        - Reload Apache
+
+  handlers:
+    - name: Restart Apache
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Reload Apache
+      service:
+        name: apache2
+        state: reloaded
