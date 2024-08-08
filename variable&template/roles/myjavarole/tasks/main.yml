@@ -1,0 +1,50 @@
+- name: Add OpenJDK PPA repository
+  apt_repository:
+    repo: 'ppa:openjdk-r/ppa'
+    state: present
+  when: ansible_os_family == "Debian"
+  
+- name: Update apt repository cache (for Debian/Ubuntu)
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+  when: ansible_os_family == "Debian"
+
+- name: Install OpenJDK 17 (Debian/Ubuntu)
+  apt:
+    name: "{{ java_package_name }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: Install OpenJDK 17 (RHEL/CentOS)
+  yum:
+    name: java-17-openjdk-devel
+    state: present
+  when: ansible_os_family == "RedHat"
+
+- name: Configure Java environment variables
+  template:
+    src: java_env.sh.j2
+    dest: "{{ java_env_script }}"
+    mode: '0644'
+  notify:
+    - Apply Java environment variables
+
+# apply below lines if u dont wanna use template
+
+# - name: Set JAVA_HOME environment variable
+#   shell: echo "export JAVA_HOME={{ java_home }}" >> /etc/profile.d/java.sh
+
+# - name: Add Java to PATH
+#   shell: echo "export PATH=$PATH:{{ java_home }}/bin" >> /etc/profile.d/java.sh
+
+# - name: Apply environment variables
+#   shell: source /etc/profile.d/java.sh
+
+- name: Verify Java installation
+  command: java -version
+  register: java_version_output
+
+- name: Print Java version
+  debug:
+    msg: "Java version installed: {{ java_version_output.stdout }}"

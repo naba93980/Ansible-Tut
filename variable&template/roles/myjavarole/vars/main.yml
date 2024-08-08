@@ -1,0 +1,5 @@
+# vars/main.yml
+java_version: 17
+java_package_name: openjdk-17-jdk
+java_home: /usr/lib/jvm/java-17-openjdk-amd64
+java_env_script: /etc/profile.d/java.sh

@@ -1,0 +1,3 @@
+- name: Apply Java environment variables
+  shell: source {{ java_env_script }}
+  when: ansible_os_family in ["Debian", "RedHat"]

@@ -1,0 +1,8 @@
+- name: Install Java JDK 17
+  hosts: all
+  become: true
+  remote_user: nabajyotimodak
+  roles:
+    - myjavarole
+
+
