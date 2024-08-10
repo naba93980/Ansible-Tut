@@ -1,0 +1,12 @@
+- name: Print the PATH environment variable from the controller
+  environment: 
+    MY_VALUE: "mycustomglobalvalue"
+  hosts: localhost
+  tasks:
+    - name: Print the global environment variable
+      shell: echo $MY_VALUE
+      register: result
+    - debug: var=result.stdout
+
+  roles:
+    - env_import

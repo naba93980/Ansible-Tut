@@ -1,0 +1,7 @@
+- name: Get env var
+  environment: 
+    MY_VALUE: "{{ mycustomvalue }}"
+  shell: echo $MY_VALUE
+  register: result
+
+- debug: var=result.stdout

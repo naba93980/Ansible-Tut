@@ -1,0 +1,7 @@
+- import_tasks: get-env.yml
+- name: Print the PATH environment variable from the controller
+  debug:
+    msg: "{{ lookup('env', 'PATH') }}"
+
+
+
